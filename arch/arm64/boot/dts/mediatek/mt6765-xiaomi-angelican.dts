@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/dts-v1/;
+#include "mt6765.dtsi"
+
+/ {
+	model = "Xiaomi Redmi 9C NFC";
+	compatible = "xiaomi,angelican", "mediatek,mt6765";
+
+	aliases {
+		serial0 = &uart0;
+	};
+
+	chosen {
+		stdout-path = "serial0:921600n8";
+		bootargs = "earlycon=uart8250,mmio32,0x11002000 console=ttyS0,921600n8 ignore_loglevel clk_ignore_unused pd_ignore_unused initcall_debug panic=5";
+		/* TODO: simple-framebuffer, address/size/format from running stock DT */
+	};
+
+	/* LK overwrites size to the real RAM (2/3/4 GB) */
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0 0x40000000 0 0x80000000>;
+	};
+
+	/* TODO: reserved-memory (ATF/TEE/ccci/ramoops) from stock running DT and /proc/iomem */
+};
+
+&uart0 {
+	status = "okay";
+};
