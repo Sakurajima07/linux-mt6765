@@ -1,0 +1,34 @@
+// SPDX-License-Identifier: GPL-2.0+
+/*
+ * Minimal bring-up board file for MT6765.
+ *
+ * "mediatek,mt6765-evb" is the board compatible already documented in
+ * Documentation/devicetree/bindings/arm/mediatek.yaml. Rename this file and
+ * the compatible/model when you add a real device (e.g. a Xiaomi phone).
+ */
+
+/dts-v1/;
+#include "mt6765.dtsi"
+
+/ {
+	model = "MediaTek MT6765 EVB";
+	compatible = "mediatek,mt6765-evb", "mediatek,mt6765";
+
+	aliases {
+		serial0 = &uart0;
+	};
+
+	chosen {
+		stdout-path = "serial0:921600n8";
+	};
+
+	/* Placeholder: the bootloader normally patches the real size in. */
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0 0x40000000 0 0x20000000>;
+	};
+};
+
+&uart0 {
+	status = "okay";
+};
